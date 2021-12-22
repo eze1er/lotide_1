@@ -1,4 +1,20 @@
-const letterPosition = function(sentence) {
+const assertArraysEqual = function(array1, array2) {
+  // console.log(array1, array2);
+  if (array1.length !== array2.length) {
+    console.log(`🛑🛑🛑 Assertion Failed: ${array1} !== ${array2}`);
+    return false;
+  }
+  for (let i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) {
+      console.log(`🛑🛑🛑 Assertion Failed: ${array1} !== ${array2}`);
+      return false;
+    }
+  }
+  console.log(`✅✅✅ Assertion Passed: ${array1} === ${array2}`);
+  return true;
+};
+
+const letterPositions = function(sentence) {
   let newArray = {};
   let position = [];
   let count = 0;
@@ -25,4 +41,5 @@ const letterPosition = function(sentence) {
 };
 // TEST CODE
 const sentence = "lighthouse in the house";
-letterPosition(sentence);
+letterPositions(sentence);
+assertArraysEqual(letterPositions("lighthouse").h, [4, 6]);
