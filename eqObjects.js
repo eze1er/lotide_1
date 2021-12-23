@@ -7,33 +7,60 @@ const assertEqual = function(actual, expected) {
   console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
   return false;
 };
+// we callback this function for compare in case of the value is array
+// we comment the console to miss confusion in test with assertEqual
+const assertArraysEqual = function(array1, array2) {
+  // console.log(array1, array2);
+  if (array1.length !== array2.length) {
+    // console.log(`🛑🛑🛑 Assertion Failed: ${array1} !== ${array2}`);
+    return false;
+  }
+  for (let i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) {
+      // console.log(`🛑🛑🛑 Assertion Failed: ${array1} !== ${array2}`);
+      return false;
+    }
+  }
+  // console.log(`✅✅✅ Assertion Passed: ${array1} === ${array2}`);
+  return true;
+};
 
 // Returns true if both objects have identical keys with identical values.
 // Otherwise you get back a big fat false!
 const eqObjects = function(object1, object2) {
+  // we put it in array obj1 and obj2 to know the length, the we can check the length for compare 
   const obj1 = Object.keys(object1);
   const obj2 = Object.keys(object2);
   let index = 0;
+  // when the length is not equal, they aren't same 
   if (obj1.length !== obj2.length) {
-    return false;
+      return false;
   }
 
   for (const key1 of obj1) {
-    for (const key2 of obj2) {
-      if (key1 === key2) {
-        if (object1[key1] !== object2[key2]) {
-          return false;
-        } else {
-          index = 1;
-        }
+    if (!Array.isArray(object1[key1])) {
+    // when the key value is not array we do this
+      if (object1[key1] !== object2[key1]) {
+        return false;
+      } else {
+        index = 1;
+      }
+    } else {
+      // when the key value is array we do this
+      if (!assertArraysEqual(object1[key1], object2[key1])) {
+        return false;
+      } else {
+        index = 1;
       }
     }
-    if (index === 0) {
-      return false;
-    }
   }
-  return true;
-};
+  if (index === 0) {
+    return false;
+  } else {
+    return true;
+  }
+}; 
+
 // TEST CODE
 const ab = { a: "1", b: "2" };
 const ba = { b: "2", a: "1" };
@@ -49,3 +76,9 @@ assertEqual(eqObjects(abd, abf), false);
 assertEqual(eqObjects(ba, abf), false); 
 assertEqual(eqObjects(abd, abf), false); 
 assertEqual(eqObjects(abc, abf), true); 
+const cd = { c: "1", d: ["2", 3] };
+const dc = { d: ["2", 3], c: "1" };
+assertEqual(eqObjects(cd, dc), true);; // => true
+
+const cd2 = { c: "1", d: ["2", 3, 4] };
+assertEqual(eqObjects(cd, cd2), false); // => false
