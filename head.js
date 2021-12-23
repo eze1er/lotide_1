@@ -1,13 +1,16 @@
 
 // FUNCTION IMPLEMENTATION
 const assertEqual = function(actual, expected) {
+  const inspect = require('util').inspect;
+
   if (actual === expected) {
-    console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
+    console.log(`✅✅✅ Assertion Passed: ${inspect(actual)} === ${inspect(expected)}`);
     return true;
   }
-  console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
+  console.log(`🛑🛑🛑 Assertion Failed: ${inspect(actual)} !== ${inspect(expected)}`);
   return false;
 };
+
 
 const head = function(array) {
   if (array === '') {
@@ -17,5 +20,5 @@ const head = function(array) {
 }
 
 // TEST CODE
-assertEqual(head([6,5,7]), 5);
+assertEqual(head([5,6,7]), 5);
 assertEqual(head(["Hello", "Lighthouse", "Labs"]), "Hello");

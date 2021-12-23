@@ -1,10 +1,12 @@
 // FUNCTION IMPLEMENTATION
 const assertEqual = function(actual, expected) {
+  const inspect = require('util').inspect;
+
   if (actual === expected) {
-    console.log(`✅✅✅ Assertion Passed: ${actual} === ${expected}`);
+    console.log(`✅✅✅ Assertion Passed: ${inspect(actual)} === ${inspect(expected)}`);
     return true;
   }
-  console.log(`🛑🛑🛑 Assertion Failed: ${actual} !== ${expected}`);
+  console.log(`🛑🛑🛑 Assertion Failed: ${inspect(actual)} !== ${inspect(expected)}`);
   return false;
 };
 
@@ -12,11 +14,9 @@ const findKeyByValue = function(array, key) {
 
   for (element in array) {
     if (key === array[element]) {
-      console.log(element);
       return element;
     }
   }
-  console.log ('undefined');
   return undefined;
 }
 // TEST CODE
