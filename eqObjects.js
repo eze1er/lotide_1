@@ -8,20 +8,15 @@ const assertEqual = function(actual, expected) {
   return false;
 };
 // we callback this function for compare in case of the value is array
-// we comment the console to miss confusion in test with assertEqual
-const assertArraysEqual = function(array1, array2) {
-  // console.log(array1, array2);
+const eqArrays = function(array1, array2) {
   if (array1.length !== array2.length) {
-    // console.log(`🛑🛑🛑 Assertion Failed: ${array1} !== ${array2}`);
     return false;
   }
   for (let i = 0; i < array1.length; i++) {
     if (array1[i] !== array2[i]) {
-      // console.log(`🛑🛑🛑 Assertion Failed: ${array1} !== ${array2}`);
       return false;
     }
   }
-  // console.log(`✅✅✅ Assertion Passed: ${array1} === ${array2}`);
   return true;
 };
 
@@ -36,7 +31,6 @@ const eqObjects = function(object1, object2) {
   if (obj1.length !== obj2.length) {
       return false;
   }
-
   for (const key1 of obj1) {
     if (!Array.isArray(object1[key1])) {
     // when the key value is not array we do this
@@ -47,7 +41,7 @@ const eqObjects = function(object1, object2) {
       }
     } else {
       // when the key value is array we do this
-      if (!assertArraysEqual(object1[key1], object2[key1])) {
+      if (!eqArrays(object1[key1], object2[key1])) {
         return false;
       } else {
         index = 1;
